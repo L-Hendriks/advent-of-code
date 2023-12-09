@@ -1,14 +1,16 @@
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+package assignment;
+
+
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class AssignmentOne {
+import static util.FileUtils.FileToList;
+
+public class DayOne {
 
     private static final Pattern pattern = Pattern.compile("\\d");
+    private static final List<String> lines = FileToList("day1-input.txt");
     private static final Map<String, String> translationMap = Map.of(
             "one", "1",
             "two", "2",
@@ -21,14 +23,12 @@ public class AssignmentOne {
             "nine", "9"
             );
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args){
         solution1();
         solution2();
     }
 
-    private static void solution1() throws IOException, URISyntaxException {
-        List<String> lines = Files.readAllLines(Path.of(Objects.requireNonNull(AssignmentOne.class.getResource("calibration.txt")).toURI()));
-
+    private static void solution1(){
         int solution = lines.stream()
                 .map(line -> pattern.matcher(line).results().collect(Collectors.toList()))
                 .map(line -> line.getFirst().group() + line.getLast().group())
@@ -38,9 +38,7 @@ public class AssignmentOne {
         System.out.println(solution);
     }
 
-    private static void solution2() throws IOException, URISyntaxException {
-        List<String> lines = Files.readAllLines(Path.of(Objects.requireNonNull(AssignmentOne.class.getResource("calibration.txt")).toURI()));
-
+    private static void solution2(){
         Pattern startFromBeginning = Pattern.compile("(?=\\d|one|two|three|four|five|six|seven|eight|nine)");
         Pattern startFromEnd = Pattern.compile("(?<=\\d|one|two|three|four|five|six|seven|eight|nine)");
 
