@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 
 import static util.FileUtils.FileToList;
 
-public class DayOne {
+public class Day01 {
 
-    private static final Pattern pattern = Pattern.compile("\\d");
-    private static final List<String> lines = FileToList("day1-input.txt");
-    private static final Map<String, String> translationMap = Map.of(
+    private static final Pattern PATTERN = Pattern.compile("\\d");
+    private static final List<String> LINES = FileToList("day1-input.txt");
+    private static final Map<String, String> TRANSLATION_MAP = Map.of(
             "one", "1",
             "two", "2",
             "three", "3",
@@ -29,8 +29,8 @@ public class DayOne {
     }
 
     private static void solution1(){
-        int solution = lines.stream()
-                .map(line -> pattern.matcher(line).results().collect(Collectors.toList()))
+        int solution = LINES.stream()
+                .map(line -> PATTERN.matcher(line).results().collect(Collectors.toList()))
                 .map(line -> line.getFirst().group() + line.getLast().group())
                 .mapToInt(Integer::parseInt)
                 .sum();
@@ -42,7 +42,7 @@ public class DayOne {
         Pattern startFromBeginning = Pattern.compile("(?=\\d|one|two|three|four|five|six|seven|eight|nine)");
         Pattern startFromEnd = Pattern.compile("(?<=\\d|one|two|three|four|five|six|seven|eight|nine)");
 
-        int solution = lines.stream().mapToInt(line -> {
+        int solution = LINES.stream().mapToInt(line -> {
             int number1StartIndex = startFromBeginning.matcher(line).results().toList().getFirst().start();
             int number1EndIndex = startFromEnd.matcher(line).results().toList().getFirst().end();
             int number2StartIndex = startFromBeginning.matcher(line).results().toList().getLast().start();
@@ -56,10 +56,10 @@ public class DayOne {
     }
 
     private static String translate(String line){
-        if(line.matches(pattern.pattern())){
+        if(line.matches(PATTERN.pattern())){
             return line;
         }
 
-        return translationMap.get(line);
+        return TRANSLATION_MAP.get(line);
     }
 }

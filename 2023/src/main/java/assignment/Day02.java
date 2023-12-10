@@ -7,8 +7,8 @@ import java.util.stream.Stream;
 
 import static util.FileUtils.FileToList;
 
-public class DayTwo {
-
+public class Day02 {
+    private static final List<String> LINES = FileToList("day2-input.txt");
     private static final Integer RED_CUBE_LIMIT = 12;
     private static final Integer GREEN_CUBE_LIMIT = 13;
     private static final Integer BLUE_CUBE_LIMIT = 14;
@@ -19,9 +19,9 @@ public class DayTwo {
     }
 
     private static void solution1() {
-        List<String> lines = FileToList("day2-input.txt");
 
-        int solution = lines.stream()
+
+        int solution = LINES.stream()
                 .map(line -> Arrays.stream(line
                         .replace(" ", "")
                         .replace("\n", "")
@@ -43,10 +43,7 @@ public class DayTwo {
     }
 
     private static void solution2(){
-        List<String> lines = FileToList("day2-input.txt");
-
-
-        int solution = lines.stream()
+        int solution = LINES.stream()
                 .map(line -> Arrays.stream(line
                                 .replace(" ", "")
                                 .replace("\n", "")
