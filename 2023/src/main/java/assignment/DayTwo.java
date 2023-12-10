@@ -15,12 +15,11 @@ public class DayTwo {
 
     public static void main(String[] args){
         solution1();
+        solution2();
     }
 
     private static void solution1() {
         List<String> lines = FileToList("day2-input.txt");
-        System.out.println(lines);
-
 
         int solution = lines.stream()
                 .map(line -> Arrays.stream(line
@@ -43,12 +42,45 @@ public class DayTwo {
         System.out.println(solution);
     }
 
+    private static void solution2(){
+        List<String> lines = FileToList("day2-input.txt");
+
+
+        int solution = lines.stream()
+                .map(line -> Arrays.stream(line
+                                .replace(" ", "")
+                                .replace("\n", "")
+                                .split("([:])"))
+                        .collect(Collectors.toList()))
+                .mapToInt(line -> {
+                    line.removeFirst();
+                    int red = maxForColor(line.getFirst(), "red");
+                    int blue = maxForColor(line.getFirst(), "blue");
+                    int green = maxForColor(line.getFirst(), "green");
+
+                    return red * blue * green;
+                })
+                .sum();
+
+        System.out.println(solution);
+    }
+
     private static int countForColor(String lineChucks, String color){
         return Stream.of(lineChucks
-                .split(","))
+                        .split(","))
                 .filter(line -> line.contains(color))
                 .map(line -> line.replace(color, ""))
                 .mapToInt(Integer::parseInt)
                 .sum();
+    }
+
+    private static int maxForColor(String lineChucks, String color){
+        return Stream.of(lineChucks
+                        .replace(";", ",")
+                        .split(","))
+                .filter(line -> line.contains(color))
+                .map(line -> line.replace(color, ""))
+                .mapToInt(Integer::parseInt)
+                .max().orElse(0);
     }
 }
